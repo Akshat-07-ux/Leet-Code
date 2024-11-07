@@ -1,23 +1,17 @@
 class Solution {
 public:
     int largestCombination(vector<int>& candidates) {
-        int maxCombinationSize = 0;
-        
-        // Iterate through each bit position from 0 to 23 (since max(candidates[i]) <= 10^7)
-        for (int bit = 0; bit < 24; ++bit) {
-            int count = 0;
-            
-            // Count how many numbers have the current bit set
+        // Initialize a vector to store the count of each bit position.
+        vector<int> bitCount(24, 0);
+        for (int i = 0; i < 24; i++) {
             for (int num : candidates) {
-                if (num & (1 << bit)) {
-                    count++;
+                // Check if the i-th bit is set.
+                if ((num & (1 << i)) != 0) {
+                    bitCount[i]++;
                 }
             }
-            
-            // Update the maximum size of a valid combination
-            maxCombinationSize = max(maxCombinationSize, count);
         }
-        
-        return maxCombinationSize;
+        // Return the maximum count.
+        return *max_element(bitCount.begin(), bitCount.end());
     }
 };
